@@ -60,9 +60,7 @@ export const ModelSelectorToolbar: React.FC<{
     function onPrevClick() {
         let wt = progState.walkthrough;
         wt.running = !wt.running;
-        console.log('currentTime', wt.time)
         wt.time = getPrevCommentaryTime();
-        console.log('prevTime', wt.time)
         progState.markDirty();
         setPopupContent(getCommentaryText());
         setPopupVisible(true);

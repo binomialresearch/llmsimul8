@@ -529,7 +529,7 @@ export function genGptModelLayout(shape: IModelShape, gptGpuModel: IGptModelLink
 
             let headCubes = [...isLargeModel ? [qkvWeightBlock, qkvBlock] : [qWeightBlock, kWeightBlock, vWeightBlock, qBlock, kBlock, vBlock],
                 qBiasBlock, kBiasBlock, vBiasBlock,
-                attnMtx, attnMtxAgg1, attnMtxAgg2, attnMtxSm];
+                attnMtx, attnMtxAgg1, attnMtxAgg2, attnMtxSm, vOutBlock];
 
             let headLabel = mkLabel(1.0, headCubes);
             let qLabel = mkLabel(1.0, [qWeightBlock, qBiasBlock, qBlock]);
