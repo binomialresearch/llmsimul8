@@ -30,7 +30,7 @@ export function walkthrough04_SelfAttention(args: IWalkthroughArgs) {
     setInitialCamera(state, new Vec3(-125.258, 0.000, -178.805), new Vec3(294.000, 12.800, 2.681));
     wt.dimHighlightBlocks = [layout.residual0, block0.ln1.lnResid, ...head2.cubes];
 
-    commentary(wt, null, 0)`
+    commentary(wt, null, 0, 'top-left')`
 The self-attention layer is perhaps the heart of the Transformer and of GPT. It's the phase where the
 columns in our input embedding matrix "talk" to each other. Up until now, and in all other phases,
 the columns can be regarded independently.
@@ -43,7 +43,7 @@ The self-attention layer is made up of several heads, and we'll focus on one of 
     let t_focusHeads = focusSelfAttentionHeadTimers(args, 3.0);
 
     breakAfter();
-    commentary(wt)`
+    commentary(wt, undefined, undefined, 'top-right')`
 The first step is to produce three vectors for each of the ${c_dimRef('T', DimStyle.T)} columns from the ${c_blockRef('normalized input embedding matrix', block0.ln1.lnResid)}.
 These vectors are the Q, K, and V vectors:
 
@@ -62,7 +62,7 @@ a row of the ${c_blockRef('Q-weight matrix', head2.qWeightBlock)} and a column o
     let t_qIterColDot = afterTime(null, 3.0);
 
     breakAfter();
-    commentary(wt)`
+    commentary(wt, undefined, undefined, 'bottom-left')`
 The dot product operation, which we'll see a lot of, is quite simple: We pair each element from
 the first vector with the corresponding element from the second vector, multiply the pairs together
 and then add the results up.`;
@@ -77,7 +77,7 @@ and then add the results up.`;
     let t_moveToDest = afterTime(null, 0.5);
 
     breakAfter();
-    commentary(wt)`
+    commentary(wt, undefined, undefined, 'bottom-right')`
 
 This is a general and simple way of ensuring each output element can be influenced by all the
 elements in the input vector (where that influence is determined by the weights). Hence its frequent
@@ -91,7 +91,7 @@ We repeat this operation for each output cell in the Q, K, V vectors:`;
     let t_processQkv = afterTime(null, 5.0);
 
     breakAfter();
-    commentary(wt)`
+    commentary(wt, undefined, undefined, 'top-left')`
 What do we do with our Q (query), K (key), and V (value) vectors? The naming
 gives us a hint: "key" and "value" are reminiscent of a dictionary in software, with keys mapping to
 values. Then "query" is what we use to look up the value.
@@ -159,7 +159,7 @@ we will query from:`;
 // It would like to find relevant information from other columns and extract their values. The other
 // columns each have a K (key) vector, which represents the information that that column has, and our
 // Q (query) vector is what information is relevant to us.
-    commentary(wt)`
+    commentary(wt, undefined, undefined, 'top-right')`
 The {K, V} entries of our lookup are the 6 columns in the past, and the Q value is the current time.
 
 We first calculate the dot product between the ${c_blockRef('Q vector', head2.qBlock)} of the current column (${c_dimRef('t = 5', DimStyle.T)}) and the ${c_blockRef('K vectors', head2.kBlock)}
@@ -170,7 +170,7 @@ of the ${c_blockRef('attention matrix', head2.attnMtx)}.`;
     let t_processAttnRow = afterTime(null, 3.0);
 
     breakAfter();
-    commentary(wt)`
+    commentary(wt, undefined, undefined, 'bottom-left')`
 These dot products are a way of measuring the similarity between the two vectors. If they're very
 similar, the dot product will be large. If they're very different, the dot product will be small or
 negative.
@@ -190,7 +190,7 @@ to 1.`;
     let t_processAttnSmRow = afterTime(null, 2.0);
 
     breakAfter();
-    commentary(wt)`
+    commentary(wt, undefined, undefined, 'bottom-right')`
 Finally, we can produce the output vector for our column (${c_dimRef('t = 5', DimStyle.T)}). We look at the (${c_dimRef('t = 5', DimStyle.T)}) row of the
 ${c_blockRef('normalized self-attention matrix', head2.attnMtxSm)} and for each element, multiply the corresponding ${c_blockRef('V vector', head2.vBlock)} of the
 other columns element-wise.`;
@@ -206,7 +206,7 @@ other columns element-wise.`;
     let t_finalizeVOutput = afterTime(null, 0.5, 0.5);
 
     breakAfter();
-    commentary(wt)`
+    commentary(wt, undefined, undefined, 'top-left')`
 Then we can add these up to produce the output vector. Thus, the output vector will be dominated by
 V vectors from columns that have high scores.
 
@@ -219,7 +219,7 @@ Now we know the process, let's run it for all the columns.`;
     let t_processRemain = afterTime(null, 8.0);
 
     breakAfter();
-    commentary(wt)`
+    commentary(wt, undefined, undefined, 'top-right')`
 And that's the process for a head of the self-attention layer. So the main goal of self-attention is
 that each column wants to find relevant information from other columns and extract their values, and
 does so by comparing its _query_ vector to the _keys_ of those other columns. With the added restriction

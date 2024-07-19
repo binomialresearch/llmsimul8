@@ -11,11 +11,20 @@ import { PhaseTimeline, PhaseTimelineHoriz } from '../PhaseTimeline';
 
 export const ModelSelectorToolbar: React.FC<{
 }> = () => {
+    // Define the Position type
+    type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+
+    // Define the position map with specific types
+    const positionMap: Record<Position, {top?: string; left?: string, bottom?: string, right?: string}> = {
+        'top-left': { top: '40px', left: '0' },
+        'top-right': { top: '0', right: '0' },
+        'bottom-left': { bottom: '30px', left: '0' },
+        'bottom-right': { bottom: '30px', right: '0' }
+    };
     let progState = useProgramState();
     const [popupContent, setPopupContent] = useState('');
     const [popupVisible, setPopupVisible] = useState(false);
-    const [popupPosition, setPopupPosition] = useState({ top: 100, left: 100 });
-
+    const [popupPosition, setPopupPosition] = useState(positionMap['top-left']);
 
     function makeButton(egIndex: number) {
 
@@ -53,7 +62,9 @@ export const ModelSelectorToolbar: React.FC<{
             wt.running = !wt.running;
         }
         progState.markDirty();
-        setPopupContent(getCommentaryText());
+        const commentaryInfo = getCommentaryText();
+        setPopupContent(commentaryInfo.text);
+        setPopupPosition(positionMap[commentaryInfo.position])
         setPopupVisible(true);
     }
 
@@ -62,7 +73,9 @@ export const ModelSelectorToolbar: React.FC<{
         wt.running = !wt.running;
         wt.time = getPrevCommentaryTime();
         progState.markDirty();
-        setPopupContent(getCommentaryText());
+        const commentaryInfo = getCommentaryText();
+        setPopupContent(commentaryInfo.text);
+        setPopupPosition(positionMap[commentaryInfo.position])
         setPopupVisible(true);
     }
 
@@ -81,14 +94,19 @@ export const ModelSelectorToolbar: React.FC<{
         return 0; // Or a default value if no previous commentary is found
     }
 
-    function getCommentaryText() {
+    function getCommentaryText(): { text: string, position: Position } {
         let wt = progState.walkthrough;
-        console.log('next time', wt.time)
         let currentCommentary = wt.times.find(timeObj => timeObj.start >= wt.time && isCommentary(timeObj));
         if (currentCommentary && isCommentary(currentCommentary)) {
-            return currentCommentary.strings.join(' ');
+            return {
+                text: currentCommentary.strings.join(' '),
+                position: currentCommentary.position || 'top-left'
+            };
         }
-        return 'No commentary available for the current time.';
+        return {
+            text: 'No commentary available for the current time.',
+            position: 'top-left'
+        };
     }
 
     function onMagnifyClick() {
@@ -112,8 +130,18 @@ export const ModelSelectorToolbar: React.FC<{
 
     }
 
+    const getPopupStyle = () => {
+        let style: React.CSSProperties = {};
+        if (popupPosition.top) style.top = `${popupPosition.top}`;
+        if (popupPosition.right) style.right = `${popupPosition.right}`;
+        if (popupPosition.bottom) style.bottom = `${popupPosition.bottom}`;
+        if (popupPosition.left) style.left = `${popupPosition.left}`;
+        style.width = '35%'
+        return style;
+    };
+
     return(
-        <div className='relative'>
+        <div>
             <div className='absolute top-0 left-0 flex flex-col'>
                 <div className='ml-2 flex flex-row'>
                     <button className={clsx(s.btn, s.prevNextBtn, 'm-2')} onClick={onPrevClick}>
@@ -133,12 +161,12 @@ export const ModelSelectorToolbar: React.FC<{
             {popupVisible && (
                 <div
                     className='absolute bg-white p-4 border shadow'
-                    style={{ top: `${popupPosition.top}px`, left: `${popupPosition.left}px` }}
+                    style={getPopupStyle()}
                 >
                     {popupContent}
                 </div>
             )}
-            <div className='left-0 w-full'>
+            <div className='absolute left-0 bottom-0 w-full m-5'>
                 <PhaseTimelineHoriz times={progState.walkthrough.times!} />
             </div>
         </div>

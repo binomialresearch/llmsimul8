@@ -186,11 +186,11 @@ export function LayerView() {
         }
     }, [canvasRender, layout]);
 
-    let sidebar = canvasRender && <div className={s.sidebar}>
-        <ProgramStateContext.Provider value={canvasRender.progState}>
-            <WalkthroughSidebar />
-        </ProgramStateContext.Provider>
-    </div>;
+    // let sidebar = canvasRender && <div className={s.sidebar}>
+    //     <ProgramStateContext.Provider value={canvasRender.progState}>
+    //         <WalkthroughSidebar />
+    //     </ProgramStateContext.Provider>
+    // </div>;
 
     let mainView = <div className={s.canvasWrap}>
         <canvas
@@ -217,11 +217,11 @@ export function LayerView() {
     </div>;
 
     return <div className={s.view}>
-        <Resizer id={"llm-sidebar"} className={"flex-1"} vertical={!layout.isDesktop} defaultFraction={0.4}>
-            {layout.isDesktop && sidebar}
+        {/* <Resizer id={"llm-sidebar"} className={"flex-1"} vertical={!layout.isDesktop} defaultFraction={0.4}> */}
+            {/* {layout.isDesktop && sidebar} */}
             {mainView}
-            {!layout.isDesktop && sidebar}
-        </Resizer>
+            {/* {!layout.isDesktop && sidebar} */}
+        {/* </Resizer> */}
     </div>;
 }
 

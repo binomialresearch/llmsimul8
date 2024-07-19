@@ -106,16 +106,19 @@ export function eventEndTime(evt: ITimeInfo) {
     return evt.start + evt.duration + evt.wait;
 }
 
+type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+
 export interface ICommentary extends ITimeInfo {
     strings: TemplateStringsArray;
     values: any[];
+    position?: Position;
 }
 
 export function isCommentary(evt: ITimeInfo): evt is ICommentary {
     return 'strings' in evt;
 }
 
-export function commentary(wt: IWalkthrough, prev?: ITimeInfo | null, duration?: number) {
+export function commentary(wt: IWalkthrough, prev?: ITimeInfo | null, duration?: number, position?: Position) {
     return (stringsArr: TemplateStringsArray, ...values: any[]): ICommentary => {
         let t = 0;
         prev = prev ?? wt.times[wt.times.length - 1];
@@ -130,6 +133,7 @@ export function commentary(wt: IWalkthrough, prev?: ITimeInfo | null, duration?:
             ...commentaryT,
             strings: stringsArr,
             values,
+            position,
         };
 
         wt.times[wt.times.length - 1] = res; // replace the time info with the commentary
