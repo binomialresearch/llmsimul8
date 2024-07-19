@@ -39,15 +39,15 @@ export function drawAllArrows(state: IRenderState, layout: IGptModelLayout) {
     let weightColor = Vec4.fromHexColor('#3333aa');
     let dataColor = Vec4.fromHexColor('#33aa33');
 
-    drawVertArrow(layout.idxObj, layout.residual0);
-    drawHorizArrow(layout.tokEmbedObj, layout.residual0);
-    drawArrowBetween(layout.posEmbedObj, BlockPos.Left, layout.residual0, BlockPos.Right);
+    // drawVertArrow(layout.idxObj, layout.residual0);
+    // drawHorizArrow(layout.tokEmbedObj, layout.residual0);
+    // drawArrowBetween(layout.posEmbedObj, BlockPos.Left, layout.residual0, BlockPos.Right);
 
-    for (let i = 0; i < 3; i++) { //layout.blocks.length; i++) {
+    for (let i = 0; i < 1; i++) { //layout.blocks.length; i++) {
         let block = layout.blocks[i];
-        drawVertArrow(prevResid, block.attnResidual);
-        drawArrowResidSplit(prevResid, block.ln1.lnResid);
-        drawArrowResidSplit(prevResid, block.ln1.lnAgg2, 2);
+        // drawVertArrow(prevResid, block.attnResidual);
+        // drawArrowResidSplit(prevResid, block.ln1.lnResid);
+        // drawArrowResidSplit(prevResid, block.ln1.lnAgg2, 2);
         drawVertArrow(block.ln1.lnAgg2, block.ln1.lnResid, 2);
 
         // let headIdx = 0;
@@ -66,64 +66,64 @@ export function drawAllArrows(state: IRenderState, layout: IGptModelLayout) {
 
             drawArrowBotToSide(head.qBlock, head.attnMtx, 0, undefined, head.qBlock.y !== head.kBlock.y);
             drawArrowBotToSide(head.kBlock, head.attnMtx, 0, undefined, head.kBlock.y !== head.qBlock.y);
-            drawArrowBotToSide(head.vBlock, head.vOutBlock, 0, undefined, head.vBlock.y !== head.kBlock.y);
+            // drawArrowBotToSide(head.vBlock, head.vOutBlock, 0, undefined, head.vBlock.y !== head.kBlock.y);
 
             drawArrowBetween(head.attnMtx, BlockPos.Left, head.attnMtxAgg2, BlockPos.Right);
             drawArrowBetween(head.attnMtxAgg1, BlockPos.Left, head.attnMtxSm, BlockPos.Right);
-            drawArrowBetween(head.attnMtxSm, BlockPos.Bot, head.vOutBlock, BlockPos.Left);
+            // drawArrowBetween(head.attnMtxSm, BlockPos.Bot, head.vOutBlock, BlockPos.Left);
 
-            drawArrowBetween(head.vOutBlock, BlockPos.Bot, block.attnOut, BlockPos.Top);
+            // drawArrowBetween(head.vOutBlock, BlockPos.Bot, block.attnOut, BlockPos.Top);
             // drawArrowBotToSide(head.vOutBlock, block.attnOut, headIdx * head.vOutBlock.cy, undefined, true);
             // headIdx += 1;
         }
 
-        drawVertArrow(block.attnResidual, block.mlpResidual);
-        drawHorizArrow(block.attnOut, block.attnResidual);
+        // drawVertArrow(block.attnResidual, block.mlpResidual);
+        // drawHorizArrow(block.attnOut, block.attnResidual);
 
-        drawHorizArrow(block.projBias, block.projWeight);
-        drawHorizArrow(block.projWeight, block.attnOut);
+        // drawHorizArrow(block.projBias, block.projWeight);
+        // drawHorizArrow(block.projWeight, block.attnOut);
 
-        drawHorizArrow(block.ln1.lnMu, block.ln1.lnSigma);
-        drawHorizArrow(block.ln1.lnSigma, block.ln1.lnResid);
+        // drawHorizArrow(block.ln1.lnMu, block.ln1.lnSigma);
+        // drawHorizArrow(block.ln1.lnSigma, block.ln1.lnResid);
 
-        drawArrowResidSplit(block.attnResidual, block.ln2.lnAgg2, 2);
-        drawVertArrow(block.ln2.lnAgg2, block.ln2.lnResid, 2);
-        drawHorizArrow(block.ln2.lnMu, block.ln2.lnSigma);
-        drawHorizArrow(block.ln2.lnSigma, block.ln2.lnResid);
+        // drawArrowResidSplit(block.attnResidual, block.ln2.lnAgg2, 2);
+        // drawVertArrow(block.ln2.lnAgg2, block.ln2.lnResid, 2);
+        // drawHorizArrow(block.ln2.lnMu, block.ln2.lnSigma);
+        // drawHorizArrow(block.ln2.lnSigma, block.ln2.lnResid);
 
-        drawArrowResidSplit(block.attnResidual, block.ln2.lnResid);
-        drawArrowBetween(block.ln2.lnResid, BlockPos.Bot, block.mlpFc, BlockPos.Right);
+        // drawArrowResidSplit(block.attnResidual, block.ln2.lnResid);
+        // drawArrowBetween(block.ln2.lnResid, BlockPos.Bot, block.mlpFc, BlockPos.Right);
 
-        drawVertArrow(block.mlpFcBias, block.mlpFcWeight);
-        drawVertArrow(block.mlpFcWeight, block.mlpFc, 12);
-        drawVertArrow(block.mlpFc, block.mlpAct, 12);
-        drawHorizArrow(block.mlpProjBias, block.mlpProjWeight);
-        drawHorizArrow(block.mlpProjWeight, block.mlpResult);
-        drawHorizArrow(block.mlpResult, block.mlpResidual);
-        drawArrowBetween(block.mlpAct, BlockPos.Right, block.mlpResult, BlockPos.Top);
+        // drawVertArrow(block.mlpFcBias, block.mlpFcWeight);
+        // drawVertArrow(block.mlpFcWeight, block.mlpFc, 12);
+        // drawVertArrow(block.mlpFc, block.mlpAct, 12);
+        // drawHorizArrow(block.mlpProjBias, block.mlpProjWeight);
+        // drawHorizArrow(block.mlpProjWeight, block.mlpResult);
+        // drawHorizArrow(block.mlpResult, block.mlpResidual);
+        // drawArrowBetween(block.mlpAct, BlockPos.Right, block.mlpResult, BlockPos.Top);
 
         prevResid = block.mlpResidual;
     }
 
-    drawArrowResidSplit(prevResid, layout.ln_f.lnAgg2, 2);
-    drawArrowBetween(prevResid, BlockPos.Bot, layout.ln_f.lnResid, BlockPos.Right);
-    drawVertArrow(layout.ln_f.lnAgg2, layout.ln_f.lnResid);
-    drawHorizArrow(layout.ln_f.lnMu, layout.ln_f.lnSigma);
-    drawHorizArrow(layout.ln_f.lnSigma, layout.ln_f.lnResid);
+    // drawArrowResidSplit(prevResid, layout.ln_f.lnAgg2, 2);
+    // drawArrowBetween(prevResid, BlockPos.Bot, layout.ln_f.lnResid, BlockPos.Right);
+    // drawVertArrow(layout.ln_f.lnAgg2, layout.ln_f.lnResid);
+    // drawHorizArrow(layout.ln_f.lnMu, layout.ln_f.lnSigma);
+    // drawHorizArrow(layout.ln_f.lnSigma, layout.ln_f.lnResid);
 
-    if (layout.logitsTransposed) {
-        drawArrowBetween(layout.ln_f.lnResid, BlockPos.Bot, layout.logits, BlockPos.Right);
-        drawVertArrow(layout.lmHeadWeight, layout.logits);
+    // if (layout.logitsTransposed) {
+    //     drawArrowBetween(layout.ln_f.lnResid, BlockPos.Bot, layout.logits, BlockPos.Right);
+    //     drawVertArrow(layout.lmHeadWeight, layout.logits);
 
-        drawVertArrow(layout.logits, layout.logitsSoftmax);
-        drawHorizArrow(layout.logits, layout.logitsAgg1, 2);
-        drawArrowBetween(layout.logitsAgg2, BlockPos.Bot, layout.logitsSoftmax, BlockPos.Right, 2);
-    } else {
-        drawVertArrow(layout.ln_f.lnResid, layout.logits);
-        drawHorizArrow(layout.lmHeadWeight, layout.logits);
-        drawVertArrow(layout.logits, layout.logitsAgg2);
-        drawVertArrow(layout.logitsAgg1, layout.logitsSoftmax);
-    }
+    //     drawVertArrow(layout.logits, layout.logitsSoftmax);
+    //     drawHorizArrow(layout.logits, layout.logitsAgg1, 2);
+    //     drawArrowBetween(layout.logitsAgg2, BlockPos.Bot, layout.logitsSoftmax, BlockPos.Right, 2);
+    // } else {
+    //     drawVertArrow(layout.ln_f.lnResid, layout.logits);
+    //     drawHorizArrow(layout.lmHeadWeight, layout.logits);
+    //     drawVertArrow(layout.logits, layout.logitsAgg2);
+    //     drawVertArrow(layout.logitsAgg1, layout.logitsSoftmax);
+    // }
 
     function blkColor(src: IBlkDef) {
         return src.t === 'w' ? weightColor : dataColor;

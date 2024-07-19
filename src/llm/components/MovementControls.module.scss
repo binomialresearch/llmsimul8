@@ -32,3 +32,15 @@
     color: #000000;
     filter: drop-shadow(0 0 2px #8a8a8a);
 }
+
+.btn {
+    border: 1px solid rgba(black, 0.3);
+    border-radius: 4px;
+    padding: 0 8px;
+    height: 30px;
+}
+
+.prevNextBtn {
+    flex: 0 1 auto;
+    width: 60px;
+}

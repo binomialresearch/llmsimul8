@@ -303,7 +303,7 @@ export function genGptModelLayout(shape: IModelShape, gptGpuModel: IGptModelLink
         dimX: DimStyle.T, dimY: DimStyle.C,
         name: 'Input Embed',
     });
-    cubes.push(idxObj, tokEmbedObj, posEmbedObj, residual0);
+    // cubes.push(idxObj, tokEmbedObj, posEmbedObj, residual0);
 
     let embedLabel = mkLabel(y, [idxObj, tokEmbedObj, posEmbedObj, residual0]);
 
@@ -529,7 +529,7 @@ export function genGptModelLayout(shape: IModelShape, gptGpuModel: IGptModelLink
 
             let headCubes = [...isLargeModel ? [qkvWeightBlock, qkvBlock] : [qWeightBlock, kWeightBlock, vWeightBlock, qBlock, kBlock, vBlock],
                 qBiasBlock, kBiasBlock, vBiasBlock,
-                attnMtx, attnMtxAgg1, attnMtxAgg2, attnMtxSm, vOutBlock];
+                attnMtx, attnMtxAgg1, attnMtxAgg2, attnMtxSm];
 
             let headLabel = mkLabel(1.0, headCubes);
             let qLabel = mkLabel(1.0, [qWeightBlock, qBiasBlock, qBlock]);
@@ -688,19 +688,19 @@ export function genGptModelLayout(shape: IModelShape, gptGpuModel: IGptModelLink
         let blockCubes = [
             ...ln1.cubes,
             ...heads.flatMap(h => h.cubes),
-            projWeight,
-            projBias,
-            attnOut,
-            attnResidual,
-            ...ln2.cubes,
-            mlpFcWeight,
-            mlpFcBias,
-            mlpFc,
-            mlpAct,
-            mlpProjWeight,
-            mlpProjBias,
-            mlpResult,
-            mlpResidual,
+            // projWeight,
+            // projBias,
+            // attnOut,
+            // attnResidual,
+            // ...ln2.cubes,
+            // mlpFcWeight,
+            // mlpFcBias,
+            // mlpFc,
+            // mlpAct,
+            // mlpProjWeight,
+            // mlpProjBias,
+            // mlpResult,
+            // mlpResidual,
         ]
 
         let headCubes = [...ln1.cubes, ...heads.flatMap(h => h.cubes)];
@@ -754,7 +754,7 @@ export function genGptModelLayout(shape: IModelShape, gptGpuModel: IGptModelLink
 
     let blocks: ReturnType<typeof createLayer>[] = [];
     let blockSrc = residual0;
-    for (let i = 0; i < nBlocks; i++) {
+    for (let i = 0; i < 1; i++) {
         if (blockIdxInColumn >= blocksPerColumn) {
             blockIdxInColumn = 0;
             y = blockYTop;
@@ -775,7 +775,7 @@ export function genGptModelLayout(shape: IModelShape, gptGpuModel: IGptModelLink
     y += blockHalfMargin;
     let ln_f = createLn(0, blockSrc, gptGpuModel?.ln_f);
 
-    cubes.push(...ln_f.cubes);
+    // cubes.push(...ln_f.cubes);
 
     let logitsTransposed = false;
 
@@ -898,7 +898,7 @@ export function genGptModelLayout(shape: IModelShape, gptGpuModel: IGptModelLink
 
     // let decoderCount = vocabSize * C; (excluded from the weight count apparently)
 
-    cubes.push(lmHeadWeight, logits, logitsAgg1, logitsAgg2, logitsSoftmax);
+    // cubes.push(lmHeadWeight, logits, logitsAgg1, logitsAgg2, logitsSoftmax);
 
     for (let i = 0; i < cubes.length; i++) {
         cubes[i].idx = i;

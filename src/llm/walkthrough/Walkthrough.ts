@@ -67,7 +67,7 @@ export type IWalkthrough = ReturnType<typeof initWalkthrough>;
 
 export function initWalkthrough() {
     return {
-        phase: SavedState.state?.phase ?? Phase.Intro_Intro,
+        phase: SavedState.state?.phase ?? Phase.Input_Detail_SelfAttention,
         time: SavedState.state?.phaseTime ?? 0,
         viewDt: 0,
         dt: 0,

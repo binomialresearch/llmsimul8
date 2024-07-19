@@ -56,13 +56,6 @@ export const PhaseTimelineHoriz: React.FC<{ times: ITimeInfo[] }> = ({ times }) 
     let [caretHitEl, setCaretHitEl] = useState<HTMLDivElement | null>(null);
     let [, refresh] = useReducer((a: any) => a + 1, 0);
 
-    let timeOffset = times[0].start;
-    let totalTime = eventEndTime(times[times.length - 1]) - times[0].start;
-
-    let inZone = wt.time >= timeOffset && wt.time <= timeOffset + totalTime;
-
-    let toFract = (v: number) => clamp((v - timeOffset) / totalTime, 0, 1);
-
     let [dragStart, setDragStart] = useCombinedMouseTouchDrag<number>(caretHitEl, () => wt.time, function handleMove(ev, ds) {
         let dx = ev.clientX - ds.clientX;
         let len = baseEl!.clientWidth;
@@ -84,6 +77,15 @@ export const PhaseTimelineHoriz: React.FC<{ times: ITimeInfo[] }> = ({ times }) 
         wt.markDirty();
         refresh();
     });
+
+    if (times.length == 0) return;
+
+    let timeOffset = times[0].start;
+    let totalTime = eventEndTime(times[times.length - 1]) - times[0].start;
+
+    let inZone = wt.time >= timeOffset && wt.time <= timeOffset + totalTime;
+
+    let toFract = (v: number) => clamp((v - timeOffset) / totalTime, 0, 1);
 
     return <div className={s.timelineBaseHoriz} ref={setBaseEl} onMouseDown={(ev) => {
         ev.preventDefault();

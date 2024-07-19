@@ -275,12 +275,12 @@ export function runProgram(view: IRenderView, state: IProgramState) {
     // these will get modified by the walkthrough (stored where?)
     drawAllArrows(state.render, state.layout);
 
-    drawModelCard(state, state.layout, 'nano-gpt', new Vec3());
+    // drawModelCard(state, state.layout, 'nano-gpt', new Vec3());
     // drawTokens(state.render, state.layout, state.display);
 
     for (let example of state.examples) {
         if (example.enabled && example.layout) {
-            drawModelCard(state, example.layout, example.name, example.offset.add(example.modelCardOffset));
+            // drawModelCard(state, example.layout, example.name, example.offset.add(example.modelCardOffset));
         }
     }
 
