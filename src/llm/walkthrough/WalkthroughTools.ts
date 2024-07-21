@@ -420,11 +420,23 @@ export function dimStyleTextShort(style: DimStyle) {
 }
 
 export const Colors = {
-    Weights: new Vec4(0.3, 0.3, 1.0),
-    Intermediates: new Vec4(0.4, 0.8, 0.4),
-    Aggregates: new Vec4(1.0, 0.8, 0.3), // a yellowish color
+    // Weights: new Vec4(0.3, 0.3, 1.0),
+    // Intermediates: new Vec4(0.4, 0.8, 0.4),
+    // Aggregates: new Vec4(1.0, 0.8, 0.3), // a yellowish color
 
-    Black: new Vec4(0, 0, 0),
+    // Black: new Vec4(0, 0, 0),
+    // Turquoise Palette
+Weights: new Vec4(1.0, 0.5, 0.5),
+Intermediates: new Vec4(0.3, 1.0, 0.9),
+Aggregates: new Vec4(1.0, 0.6, 0.2),
+Black: new Vec4(0, 0, 0),
+
+// Lavender Palette
+// Weights: new Vec4(1.0, 0.4, 0.2),
+// Intermediates: new Vec4(0.8, 0.6, 1.0),
+// Aggregates: new Vec4(1.0, 0.8, 0.2),
+// Black: new Vec4(0, 0, 0),
+
 }
 
 export function hideFromBlock(state: IRenderState, layout: IGptModelLayout, targetBlk: IBlkDef) {
